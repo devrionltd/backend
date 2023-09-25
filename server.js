@@ -4,7 +4,7 @@ const { resolve } = require("path");
 // Replace if using a different env file or config
 const env = require("dotenv").config({ path: "./.env" });
 const cors = require("cors");
-const stripe = require("stripe")(process.env.SECRET, {
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2022-08-01",
 });
 
@@ -18,11 +18,13 @@ const corsOpts = {
 
 app.use(cors(corsOpts));
 
-app.get("/", (req, res) => {});
+app.get("/", (req, res) => {
+  console.log(process.env.STRIPE_PUBLISHABLE_KEY);
+});
 
 app.get("/config", (req, res) => {
   res.send({
-    publishableKey: process.env.PUBLIC,
+    publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
   });
 });
 
